@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:my_work/utils/routes/routes.dart';
 import 'package:my_work/utils/utils.dart';
 import 'package:uuid/uuid.dart';
@@ -208,6 +207,10 @@ onDeleteMultipleWorks(context){
         for(Work work in selectedWorksList??[]){
           workList?.removeWhere((element) => element.uuid == work.uuid);
         }
+
+        selectedWorksList?.clear();
+
+        workSelected$?.add(null);
 
         workList$?.add((workList?.isEmpty??false)?null:workList);
         Get.back();
