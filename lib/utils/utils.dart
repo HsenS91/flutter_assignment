@@ -105,7 +105,7 @@ showError(context, {String? error}){
   }
 }
 
-customDialog({context, IconData? iconData, String? text, void Function()? onPressed}){
+customDialog({context, IconData? iconData, String? text, void Function()? onPressed, bool? hasIcon = true}){
   if(!(Get.isDialogOpen??true)){
     Get.defaultDialog(
       title: '',
@@ -113,6 +113,7 @@ customDialog({context, IconData? iconData, String? text, void Function()? onPres
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
+          if(hasIcon??false)
           Icon(iconData, size: 100, color: AppColors.deepOrange,),
 
           Text('$text', style: AppTextStyle.defaultStyle, textAlign: TextAlign.center,)
@@ -125,6 +126,46 @@ customDialog({context, IconData? iconData, String? text, void Function()? onPres
           text: 'Close',
         )
       ]
+    );
+  }
+}
+
+twoButtonsDialog({context, String? text, void Function()? onCancel, void Function()? onContinue, String? title}){
+  if(!(Get.isDialogOpen??true)){
+    Get.defaultDialog(
+        title: title??'',
+        titleStyle: AppTextStyle.title.copyWith(color: AppColors.deepOrange),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+
+            Text('$text', style: AppTextStyle.defaultStyle, textAlign: TextAlign.center,)
+          ],
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: ButtonComponent(
+              width: Utils.getMaxWidth(context)*0.3,
+              color: Colors.black54,
+              onPressed: onCancel,
+              text: 'Cancel',
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: ButtonComponent(
+              width: Utils.getMaxWidth(context)*0.3,
+              color: AppColors.deepOrange,
+              onPressed: onContinue,
+              text: 'Continue',
+            ),
+          )
+        ],
+
+      titlePadding: EdgeInsetsDirectional.only(top: 30.0)
     );
   }
 }

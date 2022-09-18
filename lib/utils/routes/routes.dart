@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:my_work/ui/my_work_page.dart';
-import 'package:my_work/ui/upload_page.dart';
+import '../../ui/upload_edit_page.dart';
 
 class Routes{
 
@@ -15,7 +15,7 @@ class Routes{
 
     GetPage(
       name: uploadWorkPage,
-      page: () => const UploadPage(),
+      page: () => UploadEditPage(),
     ),
   ];
 }

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,22 +11,33 @@ import 'package:my_work/utils/utils.dart';
 import 'package:my_work/utils/validations/validations.dart';
 import '../components/button_component.dart';
 
-class UploadPage extends StatefulWidget {
-  const UploadPage({Key? key}) : super(key: key);
+class UploadEditPage extends StatefulWidget {
+  final Work? work = Get.arguments??null;
+  UploadEditPage({Key? key}) : super(key: key);
 
   @override
-  State<UploadPage> createState() => _UploadPageState();
+  State<UploadEditPage> createState() => _UploadEditPageState();
 }
 
-class _UploadPageState extends State<UploadPage> {
+class _UploadEditPageState extends State<UploadEditPage> {
 
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
 
+  bool isEditing = false;
+
   @override
   void initState() {
     super.initState();
-    uploadWork$?.add(null);
+    if(widget.work == null){
+      uploadWork$?.add(null);
+    }
+    else{
+      isEditing = true;
+      _nameController.text = widget.work?.name??'';
+      uploadWork$?.add(widget.work);
+    }
+
   }
 
   @override
@@ -38,9 +48,9 @@ class _UploadPageState extends State<UploadPage> {
         elevation: 0.4,
         leadingWidth: 0.0,
         title: InkWell(onTap: () => Get.back(), child: Row(
-          children: const [
-            Icon(Icons.chevron_left, size: 30, color: AppColors.deepOrange,),
-            Text('Upload', style: TextStyle(color: Colors.deepOrange),),
+          children: [
+            const Icon(Icons.chevron_left, size: 30, color: AppColors.deepOrange,),
+            Text(isEditing ? 'Update' : 'Upload', style: const TextStyle(color: Colors.deepOrange),),
           ],
         )),
       ),
@@ -118,11 +128,23 @@ class _UploadPageState extends State<UploadPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
-                Flexible(flex: 1, child: ButtonComponent(text: 'Cancel', onPressed: (){}, color: Colors.black54,)),
+                Flexible(flex: 1, child: ButtonComponent(
+                  text: 'Cancel',
+                  onPressed: (){
+                    if(isEditing){
+                      Get.back();
+                    }
+                    else{
+                      _key.currentState?.reset();
+                      uploadWork$?.add(null);
+                    }
+                  },
+                  color: Colors.black54,)
+                ),
 
                 const SizedBox(width: 10.0,),
 
-                Flexible(flex: 1, child: ButtonComponent(text: 'Upload', onPressed: () => validateUpload(context: context, key: _key, controller: _nameController ,work: snapshot.data) )
+                Flexible(flex: 1, child: ButtonComponent(text: isEditing ? 'Update' : 'Upload', onPressed: () => validateUpload(context: context, key: _key, controller: _nameController ,work: snapshot.data, isEditing: isEditing) )
                 )
               ],
             ),

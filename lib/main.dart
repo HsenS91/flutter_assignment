@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:my_work/ui/login_page.dart';
+import 'package:my_work/ui/my_work_page.dart';
 import 'package:my_work/utils/routes/routes.dart';
 
 void main() {
@@ -28,7 +29,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           color: Colors.white
-        )
+        ),
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent
       ),
       getPages: Routes.routes,
       home: const LoginPage()

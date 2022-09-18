@@ -81,6 +81,7 @@ class _LoginViewState extends State<LoginView> {
               if(snapshot.data != null && (snapshot.data?.isNotEmpty??false)){
                 LoginModel login = LoginModel.fromJson(jsonDecode(snapshot.data??''));
                 rememberMe$.add(login.rememberMe??false);
+                SharedPrefs.REMEMBER_ME = login.rememberMe??false;
                 _emailController.text = login.email??'';
                 _passwordController.text = login.password??'';
               }
