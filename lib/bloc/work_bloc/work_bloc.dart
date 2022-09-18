@@ -71,6 +71,8 @@ onCancelEdit(context){
     }
     workList$?.add(works);
   }
+
+  selectedWorksList?.clear();
 }
 
 onDeleteWork(context, Work work, TextEditingController controller){
@@ -91,6 +93,7 @@ onDeleteWork(context, Work work, TextEditingController controller){
       }
 
       works?.remove(work);
+      selectedWorksList?.removeWhere((element) => work.uuid == element.uuid);
 
       if(tempWorkList.isNotEmpty){
         workList$?.add(tempWorkList);
@@ -100,8 +103,9 @@ onDeleteWork(context, Work work, TextEditingController controller){
         workList$?.add((works?.isEmpty??false)?null:works);
       }
 
-      workSelected$?.add(null);
-
+      if(selectedWorksList?.isEmpty??false) {
+        workSelected$?.add(null);
+      }
       Get.back();
     }
   );
@@ -182,12 +186,31 @@ onWorkTap(context, Work work, int index){
   for (var element in works??[]) {
     if(element.uuid == work.uuid){
       element.selected = true;
-    }
-    else{
-      element.selected = false;
+      selectedWorksList?.add(element);
     }
   }
   work.selected = true;
   workSelected$?.add(work);
   workList$?.add(workList);
+}
+
+onDeleteMultipleWorks(context){
+  FocusScope.of(context).requestFocus(FocusNode());
+  twoButtonsDialog(
+      title: 'Warning!',
+      text: 'Are you sure you want to delete?',
+      context: context,
+      onCancel: (){
+        Get.back();
+      },
+      onContinue: (){
+
+        for(Work work in selectedWorksList??[]){
+          workList?.removeWhere((element) => element.uuid == work.uuid);
+        }
+
+        workList$?.add((workList?.isEmpty??false)?null:workList);
+        Get.back();
+      }
+  );
 }

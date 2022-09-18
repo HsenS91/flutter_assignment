@@ -120,7 +120,7 @@ class MyWorkView extends StatelessWidget {
                    Flexible(flex: 1, child:
                     ButtonComponent(
                       text: 'Delete',
-                      onPressed: () => onDeleteWork(context, workSelected$!.value!, _searchController)
+                      onPressed: () => onDeleteMultipleWorks(context)
                     )
                   )
                 ],
@@ -240,15 +240,18 @@ class MyWorkView extends StatelessWidget {
                 if((work.selected??false))
                   PositionedDirectional(
                     end: 0,
-                    child: Container(
-                      padding: const EdgeInsetsDirectional.all(0.5),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: AppColors.deepOrange, width: 2.0)
-                      ),
-                      child: const Center(
-                        child: Icon(Icons.remove, color: AppColors.deepOrange,),
+                    child: InkWell(
+                      onTap: () => onDeleteWork(context, work, _searchController),
+                      child: Container(
+                        padding: const EdgeInsetsDirectional.all(0.5),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: AppColors.deepOrange, width: 2.0)
+                        ),
+                        child: const Center(
+                          child: Icon(Icons.remove, color: AppColors.deepOrange,),
+                        ),
                       ),
                     ),
                   ),

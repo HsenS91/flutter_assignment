@@ -7,6 +7,9 @@ BehaviorSubject<bool?>? editSelected$ = BehaviorSubject<bool?>();
 
 List<Work>? workList;
 BehaviorSubject<List<Work>?>? workList$ = BehaviorSubject<List<Work>?>();
+
+List<Work>? selectedWorksList = [];
+
 BehaviorSubject<Work?>? workSelected$ = BehaviorSubject<Work?>();
 
 BehaviorSubject<Work?>? uploadWork$ = BehaviorSubject<Work?>();
