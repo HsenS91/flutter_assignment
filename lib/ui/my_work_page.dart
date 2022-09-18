@@ -49,16 +49,15 @@ class MyWorkView extends StatelessWidget {
           },
           builder: (context, state) {
             return Container(
-                margin: const EdgeInsetsDirectional.only(start: 30.0, end: 30.0, top: 20.0),
+                margin: const EdgeInsetsDirectional.only(start: 30.0, end: 30.0),
                 width: Utils.getMaxWidth(context),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SizedBox(height: 20.0,),
                       topBar(context),
-
                       const SizedBox(height: 10.0,),
-
                       StreamBuilder<List<Work>?>(
                         initialData: null,
                         stream: workList$,
@@ -182,6 +181,7 @@ class MyWorkView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 90.0),
       child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,

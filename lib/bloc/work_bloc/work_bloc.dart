@@ -115,7 +115,7 @@ onFilter(value){
   workList$?.add(works);
   workSelected$?.add(null);
   if(value.trim().isNotEmpty){
-    List<Work> filteredWorks = workList$?.value?.where((element) => element.name!.contains(value)).toList()??[];
+    List<Work> filteredWorks = workList?.where((element) => element.name!.contains(value)).toList()??[];
     workList$?.add(filteredWorks);
   }
   else{
