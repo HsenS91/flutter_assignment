@@ -49,7 +49,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         }
       }
       catch(error){
-        emit(LoginError(error.toString()));
+        emit(const LoginError('Something went wrong, please try again.'));
       }
     });
   }
@@ -83,4 +83,16 @@ validateForgotPass(BuildContext context ,GlobalKey<FormState> key, TextEditingCo
   Get.back();
   Map<String, dynamic> data = {}..putIfAbsent('email', () => emailController.text);
   BlocProvider.of<LoginBloc>(context).add(OnForgotPassword(data));
+}
+
+validateResetPass(BuildContext context ,GlobalKey<FormState> key, TextEditingController newController, TextEditingController confirmController, TextEditingController token){
+  if(!(key.currentState?.validate()??true)) {
+    return;
+  }
+  Get.back();
+
+  Map<String, dynamic> data = {}..putIfAbsent('password', () => newController.text)
+    ..putIfAbsent('password_confirmation', () => confirmController.text)
+      ..putIfAbsent('token', () => token.text);
+  BlocProvider.of<LoginBloc>(context).add(OnResetPassword(data));
 }

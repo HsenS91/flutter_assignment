@@ -7,12 +7,13 @@ class ButtonComponent extends StatelessWidget {
   final String? text;
   final void Function()? onPressed;
   final Color? color;
-  const ButtonComponent({Key? key, required this.text, this.onPressed, this.color}) : super(key: key);
+  final double? width;
+  const ButtonComponent({Key? key, required this.text, this.onPressed, this.color, this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      minWidth: Utils.getMaxWidth(context),
+      minWidth: width??Utils.getMaxWidth(context),
       height: 45.0,
       onPressed: onPressed,
       shape: RoundedRectangleBorder(

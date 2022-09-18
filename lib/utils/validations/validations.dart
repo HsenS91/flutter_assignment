@@ -11,4 +11,18 @@ class Validations{
  static final passwordValidator = MultiValidator([
    RequiredValidator(errorText: 'Password is required'),
  ]);
+
+ static final defaultValidator = MultiValidator([
+   RequiredValidator(errorText: 'Field is required'),
+ ]);
+}
+
+class MatchValidator {
+  final String errorText;
+
+  MatchValidator({required this.errorText});
+
+  String? validateMatch(String value, String value2) {
+    return value == value2 ? null : errorText;
+  }
 }

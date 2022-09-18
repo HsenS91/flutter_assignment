@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:my_work/styles/colors.dart';
 
 class IconButtonComponent extends StatelessWidget {
   final void Function()? onTap;
   final IconData? iconData;
-  const IconButtonComponent({Key? key, this.onTap, this.iconData}) : super(key: key);
+  final bool? hasGradientColor;
+  const IconButtonComponent({Key? key, this.onTap, this.iconData, this.hasGradientColor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,9 @@ class IconButtonComponent extends StatelessWidget {
       child: Container(
         padding: const EdgeInsetsDirectional.all(5.0),
         decoration: BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Colors.deepOrangeAccent, Colors.orange.withOpacity(0.5)]),
+          color: !(hasGradientColor??true) ? Colors.white : null,
+          gradient: (hasGradientColor??false) ?
+            LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: [Colors.deepOrangeAccent, Colors.orange.withOpacity(0.5)]) : null,
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: const [
             BoxShadow(
@@ -24,7 +28,7 @@ class IconButtonComponent extends StatelessWidget {
           ]
         ),
         child: Center(
-          child: Icon(iconData, color: Colors.white,),
+          child: Icon(iconData, color: (hasGradientColor??false) ? Colors.white : Colors.deepOrangeAccent,),
         ),
       ),
     );

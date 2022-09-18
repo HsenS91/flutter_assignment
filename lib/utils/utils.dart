@@ -39,7 +39,6 @@ getFromGallery() async {
     debugPrint('>>>>>>>>>>>>> $mb');
 
     File imageFile = File(pickedFile.path);
-    await ApiProvider().getClient().createWork('Work One', imageFile);
 
 
 
@@ -88,11 +87,11 @@ showLoader(context){
   }
 }
 
-showError(context){
+showError(context, {String? error}){
   if(!(Get.isDialogOpen??true)){
     Get.defaultDialog(
       title: 'OPS!',
-      middleText: 'Something went wrong, please try again.',
+      middleText: error??'Something went wrong, please try again.',
 
       actions: [
         ButtonComponent(
@@ -111,21 +110,21 @@ customDialog({context, IconData? iconData, String? text, void Function()? onPres
     Get.defaultDialog(
       title: '',
       content: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(iconData, size: 100, color: AppColors.deepOrange,),
 
-          Text('$text', style: AppTextStyle.defaultStyle,)
+          Text('$text', style: AppTextStyle.defaultStyle, textAlign: TextAlign.center,)
         ],
       ),
 
-
-        actions: [
-          ButtonComponent(
-            onPressed: onPressed,
-            text: 'Close',
-          )
-        ]
+      actions: [
+        ButtonComponent(
+          onPressed: onPressed,
+          text: 'Close',
+        )
+      ]
     );
   }
 }

@@ -14,7 +14,8 @@ class TextFieldComponent extends StatelessWidget {
   final FocusNode? focusNode;
   final void Function(String)? onFieldSubmitted;
   final TextInputAction? textInputAction;
-  const TextFieldComponent({Key? key, this.icon, this.hasPadding, this.label, required this.placeHolder, required this.controller, this.validator, this.autoValidateMode, this.hideText = false, this.keyboardType, this.focusNode, this.onFieldSubmitted, this.textInputAction}) : super(key: key);
+  final Widget? suffixIcon;
+  const TextFieldComponent({Key? key, this.icon, this.hasPadding, this.label, required this.placeHolder, required this.controller, this.validator, this.autoValidateMode, this.hideText = false, this.keyboardType, this.focusNode, this.onFieldSubmitted, this.textInputAction, this.suffixIcon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,8 @@ class TextFieldComponent extends StatelessWidget {
           decoration: InputDecoration(
             contentPadding: (hasPadding??false) ? const EdgeInsets.symmetric(vertical: 8.0, horizontal: 5.0) : null,
             prefixIcon: icon,
+            suffixIcon: suffixIcon,
+            suffixIconColor: Colors.grey.withOpacity(0.5),
             floatingLabelBehavior: FloatingLabelBehavior.never,
             labelText: placeHolder,
             labelStyle: AppTextStyle.placeHolder,

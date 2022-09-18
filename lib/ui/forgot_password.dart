@@ -45,6 +45,8 @@ class ForgotPassword extends StatelessWidget {
                 label: 'Email',
                 validator: Validations.emailValidator,
                 autoValidateMode: AutovalidateMode.onUserInteraction,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.emailAddress,
                 placeHolder: 'Enter email',
                 controller: controller
             ),
