@@ -12,7 +12,7 @@ abstract class ApiClient<T> {
   factory ApiClient(Dio dio, {String baseUrl}) = _ApiClient<T>;
 
   @POST(Urls.LOGIN)
-  Future<LoginResponse> login(@Body() Map<String, dynamic> data);
+  Future<HttpResponse> login(@Body() Map<String, dynamic> data);
 
   @POST(Urls.RESET_PASSWORD_FORM)
   Future<BaseResponse> resetPasswordForm(@Body() Map<String, dynamic> data);

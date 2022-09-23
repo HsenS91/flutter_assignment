@@ -7,6 +7,7 @@ import 'package:my_work/api/api_provider.dart';
 import 'package:my_work/model/base_response/base_response.dart';
 import 'package:my_work/model/login_model/login_model.dart';
 import 'package:my_work/model/login_model/login_response.dart';
+import 'package:retrofit/retrofit.dart';
 
 
 part 'login_event.dart';
@@ -20,9 +21,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         if(event is OnLogin){
           emit(LoginLoading());
 
-          Response res = await Dio().post('http://apidev.tabkha.online/api/auth/login', data: event.loginData);
+          //Response res = await Dio().post('http://apidev.tabkha.online/api/auth/login', data: event.loginData);
 
-          print(res.headers['set-cookie']);
+          HttpResponse res = await api.getClient().login(event.loginData);
+
+          print(res.response.headers['set-cookie']);
 
 
           LoginResponse response = LoginResponse.fromJson(res.data)   ;
