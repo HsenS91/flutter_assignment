@@ -1,11 +1,13 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:my_work/api/api_provider.dart';
 import 'package:my_work/model/base_response/base_response.dart';
 import 'package:my_work/model/login_model/login_model.dart';
 import 'package:my_work/model/login_model/login_response.dart';
+
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -17,7 +19,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       try{
         if(event is OnLogin){
           emit(LoginLoading());
-          LoginResponse response = await api.getClient().login(event.loginData);
+
+          Response res = await Dio().post('http://apidev.tabkha.online/api/auth/login', data: event.loginData);
+
+          print(res.headers['set-cookie']);
+
+
+          LoginResponse response = LoginResponse.fromJson(res.data)   ;
+          //LoginResponse response = await api.getClient().login(event.loginData);
           if(response.success??false){
             emit(LoginSuccess());
           }
