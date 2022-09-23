@@ -30,7 +30,7 @@ abstract class ApiClient<T> {
   );
 
   @GET(Urls.GET_WORK_BY_USER_ID)
-  Future<BaseResponse> getWorkByUserId(@Query('user-id') int? id);
+  Future<HttpResponse> getWorkByUserId(@Query('user_id') int? id);
 
   @POST(Urls.UPDATE_WORK)
   Future<BaseResponse> updateWork(@Body() Map<String, dynamic> data);

@@ -1,5 +1,7 @@
+import 'package:my_work/api/api_provider.dart';
 import 'package:my_work/utils/routes/routes.dart';
 import 'package:my_work/utils/utils.dart';
+import 'package:retrofit/retrofit.dart';
 import 'package:uuid/uuid.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -12,9 +14,15 @@ part 'work_event.dart';
 part 'work_state.dart';
 
 class WorkBloc extends Bloc<WorkEvent, WorkState> {
-  WorkBloc() : super(WorkInitial()) {
-    on<WorkEvent>((event, emit) {
 
+  WorkBloc() : super(WorkInitial()) {
+
+    ApiProvider api = ApiProvider();
+
+    on<WorkEvent>((event, emit) async {
+      if(event is GetAllWorks){
+        HttpResponse resp = await api.getClient().getWorkByUserId(2);
+      }
     });
   }
 }

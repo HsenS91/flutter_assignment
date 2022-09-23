@@ -108,20 +108,20 @@ class _ApiClient<T> implements ApiClient<T> {
   }
 
   @override
-  Future<BaseResponse> getWorkByUserId(id) async {
+  Future<HttpResponse<dynamic>> getWorkByUserId(id) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'user-id': id};
+    final queryParameters = <String, dynamic>{r'user_id': id};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<BaseResponse>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'get-work-by-user-id',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = BaseResponse.fromJson(_result.data!);
-    return value;
+    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, 'user/get-work-by-user-id',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
   @override

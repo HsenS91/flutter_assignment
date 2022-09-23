@@ -29,7 +29,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
 
           LoginResponse response = LoginResponse.fromJson(res.data)   ;
-          //LoginResponse response = await api.getClient().login(event.loginData);
+          ApiProvider.authToken = res.response.headers['set-cookie']?[0].split(';')[0];
+          HttpResponse resp = await api.getClient().getWorkByUserId(2);
+
           if(response.success??false){
             emit(LoginSuccess());
           }
